@@ -21,18 +21,18 @@ function App() {
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'todo',
-    drop: (item) => addToCompleted(item.id),
+    drop: (item) => addToCompleted(item.index),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
-  const addToCompleted = (id) => {
-    const taskToMove = taskList.find((task) => task.index === id);
+  const addToCompleted = (index) => {
+    const taskToMove = taskList.find((task) => task.index === index);
 
     if (taskToMove) {
       // Remove the task from taskList
-      const updatedTaskList = taskList.filter((task) => task.index !== id);
+      const updatedTaskList = taskList.filter((task) => task.index !== index);
       setTaskList(updatedTaskList);
 
       // Add the task to completed
@@ -59,14 +59,14 @@ function App() {
       <div className="flex flex-row">
         <div className="w-full">
           <h2 className="text-[#74c69d] text-xl sm:text-2xl ml-6 font-extrabold">YOUR TASKS</h2>
-          {taskList.map((task) => (
-            <ToDo task={task} key={task.id} index={task.id} setTaskList={setTaskList} taskList={taskList} />
+          {taskList.map((task, index) => (
+            <ToDo task={task} key={index} index={index} setTaskList={setTaskList} taskList={taskList} />
           ))}
         </div>
         <div className="w-full" ref={drop}>
           <h2 className="text-[#74c69d] text-xl sm:text-2xl ml-6 font-extrabold">COMPLETED</h2>
-          {completed.map((task) => (
-            <ToDo task={task} key={task.id} index={task.id} setTaskList={setTaskList} taskList={taskList} />
+          {completed.map((task, index) => (
+            <ToDo task={task} key={index} index={index} setTaskList={setTaskList} taskList={taskList} />
           ))}
         </div>
       </div>
